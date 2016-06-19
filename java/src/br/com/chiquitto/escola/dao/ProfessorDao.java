@@ -39,16 +39,23 @@ public class ProfessorDao extends PessoaDao {
                 + " (tipo, nome, fone, email, salario, nascimento)"
                 + " Values"
                 + " (2, ?, ?, ?, ?, ?)";
+        
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
         try {
 
-            PreparedStatement stmt = conexao.prepareStatement(sql);
+            PreparedStatement stmt = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             stmt.setString(1, professor.getNome());
             stmt.setString(2, professor.getFone());
             stmt.setString(3, professor.getEmail());
             stmt.setBigDecimal(4, professor.getSalario());
-            stmt.setString(5, professor.getNascimento().toString());
+            stmt.setString(5, df.format(professor.getNascimento()));
             stmt.executeUpdate();
+            
+            ResultSet generatedKeys = stmt.getGeneratedKeys();
+            generatedKeys.next();
+            professor.setIdpessoa(generatedKeys.getInt(1));
+            
             stmt.close();
 
         } catch (SQLException ex) {
@@ -66,6 +73,8 @@ public class ProfessorDao extends PessoaDao {
                 + " nascimento = ?"
                 + " Where (idpessoa = ?)"
                 + "     And (tipo = 2)";
+        
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
         try {
 
@@ -74,7 +83,7 @@ public class ProfessorDao extends PessoaDao {
             stmt.setString(2, professor.getFone());
             stmt.setString(3, professor.getEmail());
             stmt.setBigDecimal(4, professor.getSalario());
-            stmt.setString(5, professor.getNascimento().toString());
+            stmt.setString(5, df.format(professor.getNascimento()));
             stmt.setInt(6, professor.getIdpessoa());
             stmt.executeUpdate();
             stmt.close();

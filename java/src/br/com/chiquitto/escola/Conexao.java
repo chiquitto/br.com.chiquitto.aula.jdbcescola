@@ -12,17 +12,22 @@ import java.sql.SQLException;
 public class Conexao {
 
     private static Connection conexao;
+    private static String url;
 
     public static Connection getConexao() {
         if (conexao == null) {
             try {
                 DriverManager.registerDriver(new JDBC());
-                conexao = DriverManager.getConnection("jdbc:sqlite:/Users/chiquitto/work/aula/java-caso-uso-escola/data/banco.db");
+                conexao = DriverManager.getConnection(url);
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
         }
 
         return conexao;
+    }
+
+    public static void setUrl(String url2) {
+        url = url2;
     }
 }

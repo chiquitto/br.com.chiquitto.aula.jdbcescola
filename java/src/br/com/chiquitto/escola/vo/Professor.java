@@ -17,5 +17,9 @@ public class Professor extends Pessoa {
     public void setSalario(BigDecimal salario) {
         this.salario = salario;
     }
+    
+    public void setSalario(float salario) {
+        this.salario = new BigDecimal(salario);
+    }
 
 }

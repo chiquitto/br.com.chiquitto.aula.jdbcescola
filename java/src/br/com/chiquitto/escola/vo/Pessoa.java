@@ -1,7 +1,5 @@
 package br.com.chiquitto.escola.vo;
 
-import java.time.LocalDate;
-import java.util.Calendar;
 import java.util.Date;
 
 /**
