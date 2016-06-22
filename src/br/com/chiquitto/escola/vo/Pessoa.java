@@ -10,10 +10,14 @@ import java.io.Serializable;
 abstract public class Pessoa implements Serializable {
 
     private int idpessoa;
+    private int tipo;
     private String nome;
     private String fone;
     private String email;
     private Date nascimento;
+    
+    public static final int TIPO_ALUNO = 1;
+    public static final int TIPO_PROFESSOR = 2;
 
     public int getIdpessoa() {
         return idpessoa;
@@ -21,6 +25,14 @@ abstract public class Pessoa implements Serializable {
 
     public void setIdpessoa(int idpessoa) {
         this.idpessoa = idpessoa;
+    }
+
+    public int getTipo() {
+        return tipo;
+    }
+
+    protected void setTipo(int tipo) {
+        this.tipo = tipo;
     }
 
     public String getNome() {
@@ -55,10 +67,5 @@ abstract public class Pessoa implements Serializable {
         this.nascimento = nascimento;
     }
 
-    /*public void setNascimento(Date nascimento) {
-        Calendar c = Calendar.getInstance();
-        c.setTime(nascimento);
-        
-        this.nascimento = LocalDate.of(c.get(Calendar.YEAR), c.get(Calendar.MONTH) + 1, c.get(Calendar.DAY_OF_MONTH));
-    }*/
+    
 }

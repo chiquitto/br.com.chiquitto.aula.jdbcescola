@@ -10,6 +10,10 @@ public class Professor extends Pessoa {
 
     private BigDecimal salario;
 
+    public Professor() {
+        this.setTipo(Pessoa.TIPO_PROFESSOR);
+    }
+    
     public BigDecimal getSalario() {
         return salario;
     }

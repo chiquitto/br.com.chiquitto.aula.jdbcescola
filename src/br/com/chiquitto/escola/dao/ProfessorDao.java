@@ -35,11 +35,13 @@ public class ProfessorDao extends PessoaDao {
     }
 
     public void cadastrar(Professor professor) {
+        // TODO: Verificar se email esta repetido
+
         String sql = "Insert Into pessoa"
                 + " (tipo, nome, fone, email, salario, nascimento)"
                 + " Values"
                 + " (2, ?, ?, ?, ?, ?)";
-        
+
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
         try {
@@ -51,11 +53,11 @@ public class ProfessorDao extends PessoaDao {
             stmt.setBigDecimal(4, professor.getSalario());
             stmt.setString(5, df.format(professor.getNascimento()));
             stmt.executeUpdate();
-            
+
             ResultSet generatedKeys = stmt.getGeneratedKeys();
             generatedKeys.next();
             professor.setIdpessoa(generatedKeys.getInt(1));
-            
+
             stmt.close();
 
         } catch (SQLException ex) {
@@ -73,7 +75,7 @@ public class ProfessorDao extends PessoaDao {
                 + " nascimento = ?"
                 + " Where (idpessoa = ?)"
                 + "     And (tipo = 2)";
-        
+
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
         try {
@@ -108,13 +110,13 @@ public class ProfessorDao extends PessoaDao {
                 professor.setNome(rs.getString("nome"));
                 professor.setFone(rs.getString("fone"));
                 professor.setEmail(rs.getString("email"));
-                
+
                 try {
                     professor.setNascimento(df.parse(rs.getString("nascimento")));
                 } catch (ParseException ex) {
                     ex.printStackTrace();
                 }
-                
+
                 professor.setSalario(rs.getBigDecimal("salario"));
 
                 professores.add(professor);
