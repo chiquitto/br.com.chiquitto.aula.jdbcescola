@@ -1,10 +1,12 @@
 package br.com.chiquitto.escola.vo;
 
+import java.io.Serializable;
+
 /**
  *
  * @author chiquitto
  */
-public class Endereco {
+public class Endereco implements Serializable {
 
     private int idcidade;
     private int idpessoa;

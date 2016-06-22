@@ -1,10 +1,12 @@
 package br.com.chiquitto.escola.vo;
 
+import java.io.Serializable;
+
 /**
  *
  * @author chiquitto
  */
-public class Cidade {
+public class Cidade implements Serializable {
 
     private int idcidade;
     private String cidade;

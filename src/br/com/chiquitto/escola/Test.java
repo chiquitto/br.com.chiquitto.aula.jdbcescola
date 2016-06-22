@@ -4,7 +4,6 @@ import br.com.chiquitto.escola.dao.AlunoDao;
 import br.com.chiquitto.escola.dao.ProfessorDao;
 import br.com.chiquitto.escola.vo.Aluno;
 import br.com.chiquitto.escola.vo.Professor;
-import java.sql.Connection;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -31,7 +30,7 @@ public class Test {
         p.setNome("Alisson Chiquitto");
         
         ProfessorDao professorDao = new ProfessorDao();
-        professorDao.cadastrar(p);
+        //professorDao.cadastrar(p);
         
         System.out.println("Professor cadastrado: " + p.getIdpessoa());
         
@@ -51,7 +50,7 @@ public class Test {
         a.setNumero(1111);
         
         AlunoDao alunoDao = new AlunoDao();
-        alunoDao.cadastrar(a);
+        //alunoDao.cadastrar(a);
         
         System.out.println("Aluno cadastrado: " + a.getIdpessoa());
         

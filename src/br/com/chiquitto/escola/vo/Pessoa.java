@@ -1,12 +1,13 @@
 package br.com.chiquitto.escola.vo;
 
 import java.util.Date;
+import java.io.Serializable;
 
 /**
  *
  * @author chiquitto
  */
-abstract public class Pessoa {
+abstract public class Pessoa implements Serializable {
 
     private int idpessoa;
     private String nome;
