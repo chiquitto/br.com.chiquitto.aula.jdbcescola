@@ -2,11 +2,14 @@ package br.com.chiquitto.escola;
 
 import br.com.chiquitto.escola.dao.AlunoDao;
 import br.com.chiquitto.escola.dao.ProfessorDao;
+import br.com.chiquitto.escola.exception.RowNotFoundException;
 import br.com.chiquitto.escola.vo.Aluno;
 import br.com.chiquitto.escola.vo.Professor;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -30,12 +33,19 @@ public class Test {
         p.setNome("Alisson Chiquitto");
         
         ProfessorDao professorDao = new ProfessorDao();
-        //professorDao.cadastrar(p);
+        professorDao.cadastrar(p);
         
         System.out.println("Professor cadastrado: " + p.getIdpessoa());
         
         p.setNascimento(mesPassado);
         professorDao.editar(p);
+        
+        try {
+            Professor prof = professorDao.getOne(p.getIdpessoa());
+            System.out.println("Professor (getOne): " + prof.getIdpessoa());
+        } catch (RowNotFoundException ex) {
+            ex.printStackTrace();
+        }
         
         List<Professor> professores = professorDao.getAll();
         for(Professor professor : professores) {

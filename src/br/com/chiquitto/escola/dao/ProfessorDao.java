@@ -1,5 +1,6 @@
 package br.com.chiquitto.escola.dao;
 
+import br.com.chiquitto.escola.exception.RowNotFoundException;
 import br.com.chiquitto.escola.vo.Endereco;
 import br.com.chiquitto.escola.vo.Professor;
 import java.sql.PreparedStatement;
@@ -127,5 +128,41 @@ public class ProfessorDao extends PessoaDao {
         }
 
         return professores;
+    }
+    
+    public Professor getOne(int idpessoa) throws RowNotFoundException {
+        try {
+            String sql = "Select idpessoa, nome, fone, email, salario, nascimento From pessoa Where (tipo=2) And (idpessoa = ?)";
+            
+            PreparedStatement stmt = conexao.prepareStatement(sql);
+            stmt.setInt(1, idpessoa);
+            
+            ResultSet rs = stmt.executeQuery();
+
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+
+            //if (rs.next()) {
+                Professor professor = new Professor();
+                professor.setIdpessoa(rs.getInt("idpessoa"));
+                professor.setNome(rs.getString("nome"));
+                professor.setFone(rs.getString("fone"));
+                professor.setEmail(rs.getString("email"));
+
+                try {
+                    professor.setNascimento(df.parse(rs.getString("nascimento")));
+                } catch (ParseException ex) {
+                    ex.printStackTrace();
+                }
+
+                professor.setSalario(rs.getBigDecimal("salario"));
+                
+                return professor;
+            //}
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        throw new RowNotFoundException();
     }
 }
