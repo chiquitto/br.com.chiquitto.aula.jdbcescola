@@ -1,12 +1,13 @@
-package br.com.chiquitto.escola;
+package br.com.chiquitto.aula.jdbcescola;
 
-import br.com.chiquitto.escola.dao.AlunoDao;
-import br.com.chiquitto.escola.dao.CidadeDao;
-import br.com.chiquitto.escola.dao.ProfessorDao;
-import br.com.chiquitto.escola.exception.RowNotFoundException;
-import br.com.chiquitto.escola.vo.Aluno;
-import br.com.chiquitto.escola.vo.Cidade;
-import br.com.chiquitto.escola.vo.Professor;
+import br.com.chiquitto.aula.jdbcescola.Conexao;
+import br.com.chiquitto.aula.jdbcescola.dao.AlunoDao;
+import br.com.chiquitto.aula.jdbcescola.dao.CidadeDao;
+import br.com.chiquitto.aula.jdbcescola.dao.ProfessorDao;
+import br.com.chiquitto.aula.jdbcescola.exception.RowNotFoundException;
+import br.com.chiquitto.aula.jdbcescola.vo.Aluno;
+import br.com.chiquitto.aula.jdbcescola.vo.Cidade;
+import br.com.chiquitto.aula.jdbcescola.vo.Professor;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;

@@ -1,4 +1,4 @@
-package br.com.chiquitto.escola.exception;
+package br.com.chiquitto.aula.jdbcescola.exception;
 
 /**
  *

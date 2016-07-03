@@ -1,4 +1,4 @@
-package br.com.chiquitto.escola.dao;
+package br.com.chiquitto.aula.jdbcescola.dao;
 
 /**
  *

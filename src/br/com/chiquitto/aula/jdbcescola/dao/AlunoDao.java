@@ -1,9 +1,9 @@
-package br.com.chiquitto.escola.dao;
+package br.com.chiquitto.aula.jdbcescola.dao;
 
-import br.com.chiquitto.escola.Conexao;
-import br.com.chiquitto.escola.exception.RowNotFoundException;
-import br.com.chiquitto.escola.vo.Aluno;
-import br.com.chiquitto.escola.vo.Endereco;
+import br.com.chiquitto.aula.jdbcescola.Conexao;
+import br.com.chiquitto.aula.jdbcescola.exception.RowNotFoundException;
+import br.com.chiquitto.aula.jdbcescola.vo.Aluno;
+import br.com.chiquitto.aula.jdbcescola.vo.Endereco;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;

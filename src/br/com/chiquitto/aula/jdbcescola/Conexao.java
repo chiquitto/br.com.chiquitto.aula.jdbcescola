@@ -1,4 +1,4 @@
-package br.com.chiquitto.escola;
+package br.com.chiquitto.aula.jdbcescola;
 
 import org.sqlite.JDBC;
 import java.sql.Connection;

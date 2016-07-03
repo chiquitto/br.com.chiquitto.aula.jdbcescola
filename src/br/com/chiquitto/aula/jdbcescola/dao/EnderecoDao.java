@@ -1,7 +1,7 @@
-package br.com.chiquitto.escola.dao;
+package br.com.chiquitto.aula.jdbcescola.dao;
 
-import br.com.chiquitto.escola.Conexao;
-import br.com.chiquitto.escola.vo.Endereco;
+import br.com.chiquitto.aula.jdbcescola.Conexao;
+import br.com.chiquitto.aula.jdbcescola.vo.Endereco;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 

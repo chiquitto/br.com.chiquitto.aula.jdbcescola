@@ -1,4 +1,4 @@
-package br.com.chiquitto.escola.vo;
+package br.com.chiquitto.aula.jdbcescola.vo;
 
 import java.math.BigDecimal;
 
