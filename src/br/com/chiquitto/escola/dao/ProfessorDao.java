@@ -1,5 +1,6 @@
 package br.com.chiquitto.escola.dao;
 
+import br.com.chiquitto.escola.Conexao;
 import br.com.chiquitto.escola.exception.RowNotFoundException;
 import br.com.chiquitto.escola.vo.Endereco;
 import br.com.chiquitto.escola.vo.Professor;
@@ -26,7 +27,7 @@ public class ProfessorDao extends PessoaDao {
             new EnderecoDao().apagar(endereco);
 
             String sql = "Delete From pessoa Where (idpessoa = ?) And (tipo = 2)";
-            PreparedStatement stmt = conexao.prepareStatement(sql);
+            PreparedStatement stmt = Conexao.getConexao().prepareStatement(sql);
             stmt.setInt(1, professor.getIdpessoa());
             stmt.executeUpdate();
             stmt.close();
@@ -47,7 +48,7 @@ public class ProfessorDao extends PessoaDao {
 
         try {
 
-            PreparedStatement stmt = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement stmt = Conexao.getConexao().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             stmt.setString(1, professor.getNome());
             stmt.setString(2, professor.getFone());
             stmt.setString(3, professor.getEmail());
@@ -67,6 +68,8 @@ public class ProfessorDao extends PessoaDao {
     }
 
     public void editar(Professor professor) {
+        // TODO: Verificar se email esta repetido
+
         String sql = "Update pessoa"
                 + " Set "
                 + " nome = ?,"
@@ -81,7 +84,7 @@ public class ProfessorDao extends PessoaDao {
 
         try {
 
-            PreparedStatement stmt = conexao.prepareStatement(sql);
+            PreparedStatement stmt = Conexao.getConexao().prepareStatement(sql);
             stmt.setString(1, professor.getNome());
             stmt.setString(2, professor.getFone());
             stmt.setString(3, professor.getEmail());
@@ -100,7 +103,7 @@ public class ProfessorDao extends PessoaDao {
         List<Professor> professores = new ArrayList<>();
 
         try {
-            Statement st = conexao.createStatement();
+            Statement st = Conexao.getConexao().createStatement();
             ResultSet rs = st.executeQuery("Select idpessoa, nome, fone, email, salario, nascimento From pessoa Where tipo=2");
 
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
@@ -129,19 +132,19 @@ public class ProfessorDao extends PessoaDao {
 
         return professores;
     }
-    
+
     public Professor getOne(int idpessoa) throws RowNotFoundException {
         try {
             String sql = "Select idpessoa, nome, fone, email, salario, nascimento From pessoa Where (tipo=2) And (idpessoa = ?)";
-            
-            PreparedStatement stmt = conexao.prepareStatement(sql);
+
+            PreparedStatement stmt = Conexao.getConexao().prepareStatement(sql);
             stmt.setInt(1, idpessoa);
-            
+
             ResultSet rs = stmt.executeQuery();
 
-            DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-
-            //if (rs.next()) {
+            if (rs.next()) {
+                DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+                
                 Professor professor = new Professor();
                 professor.setIdpessoa(rs.getInt("idpessoa"));
                 professor.setNome(rs.getString("nome"));
@@ -155,14 +158,14 @@ public class ProfessorDao extends PessoaDao {
                 }
 
                 professor.setSalario(rs.getBigDecimal("salario"));
-                
+
                 return professor;
-            //}
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        
+
         throw new RowNotFoundException();
     }
 }

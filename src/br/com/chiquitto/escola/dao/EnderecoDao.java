@@ -1,5 +1,6 @@
 package br.com.chiquitto.escola.dao;
 
+import br.com.chiquitto.escola.Conexao;
 import br.com.chiquitto.escola.vo.Endereco;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -13,7 +14,7 @@ public class EnderecoDao extends AbstractDao {
     public void apagar(Endereco endereco) {
         try {
             String sql = "Delete from endereco Where idpessoa = ?";
-            PreparedStatement stmt = conexao.prepareStatement(sql);
+            PreparedStatement stmt = Conexao.getConexao().prepareStatement(sql);
             stmt.setInt(1, endereco.getIdpessoa());
             stmt.executeUpdate();
             stmt.close();
@@ -33,7 +34,7 @@ public class EnderecoDao extends AbstractDao {
                 + "(?, ?, ?, ?)";
 
         try {
-            PreparedStatement stmt = conexao.prepareStatement(sql);
+            PreparedStatement stmt = Conexao.getConexao().prepareStatement(sql);
             stmt.setInt(1, endereco.getIdcidade());
             stmt.setInt(2, endereco.getIdpessoa());
             stmt.setString(3, endereco.getLogradouro());
