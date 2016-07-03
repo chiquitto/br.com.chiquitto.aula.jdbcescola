@@ -1,6 +1,5 @@
 package br.com.chiquitto.aula.jdbcescola;
 
-import br.com.chiquitto.aula.jdbcescola.Conexao;
 import br.com.chiquitto.aula.jdbcescola.dao.AlunoDao;
 import br.com.chiquitto.aula.jdbcescola.dao.CidadeDao;
 import br.com.chiquitto.aula.jdbcescola.dao.ProfessorDao;
@@ -19,7 +18,7 @@ import java.util.List;
 public class Test {
 
     public static void main(String[] args) {
-        Conexao.setUrl("jdbc:sqlite:/Users/chiquitto/work/aula/java-caso-uso-escola/data/escola.sqlite.db");
+        Conexao.setUrl("jdbc:sqlite:/Users/chiquitto/work/aula/br.com.chiquitto.aula.jdbcescola/data/escola.sqlite.db");
 
         // professor();
 
