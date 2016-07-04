@@ -3,10 +3,12 @@ package br.com.chiquitto.aula.jdbcescola;
 import br.com.chiquitto.aula.jdbcescola.dao.AlunoDao;
 import br.com.chiquitto.aula.jdbcescola.dao.CidadeDao;
 import br.com.chiquitto.aula.jdbcescola.dao.ProfessorDao;
+import br.com.chiquitto.aula.jdbcescola.dao.UsuarioDao;
 import br.com.chiquitto.aula.jdbcescola.exception.RowNotFoundException;
 import br.com.chiquitto.aula.jdbcescola.vo.Aluno;
 import br.com.chiquitto.aula.jdbcescola.vo.Cidade;
 import br.com.chiquitto.aula.jdbcescola.vo.Professor;
+import br.com.chiquitto.aula.jdbcescola.vo.Usuario;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -21,10 +23,12 @@ public class Test {
         Conexao.setUrl("jdbc:sqlite:/Users/chiquitto/work/aula/br.com.chiquitto.aula.jdbcescola/data/escola.sqlite.db");
 
         // professor();
-
-        //aluno();
         
-        cidade();
+        usuario();
+
+        // aluno();
+        
+        // cidade();
     }
 
     private static void aluno() {
@@ -110,6 +114,33 @@ public class Test {
         List<Cidade> cidades = cidadeDao.getAll();
         for (Cidade cidade : cidades) {
             System.out.println(cidade.getIdcidade()+ ":" + cidade.getCidade());
+        }
+    }
+
+    private static void usuario() {
+        Calendar c = Calendar.getInstance();
+        Date hoje = c.getTime();
+        c.add(Calendar.MONTH, -1);
+        Date mesPassado = c.getTime();
+
+        Usuario a = new Usuario();
+        a.setEmail("chiquitto@gmail.com");
+        a.setFone("4499998888");
+        a.setNascimento(hoje);
+        a.setNome("Usuario 123");
+        a.setSenha("teste");
+
+        UsuarioDao usuarioDao = new UsuarioDao();
+        usuarioDao.cadastrar(a);
+
+        System.out.println("Usuario cadastrado: " + a.getIdpessoa());
+
+        a.setNascimento(mesPassado);
+        usuarioDao.editar(a);
+
+        List<Usuario> usuarios = usuarioDao.getAll();
+        for (Usuario usuario : usuarios) {
+            System.out.println(usuario.getIdpessoa() + ":" + usuario.getNome() + ":" + usuario.getNascimento());
         }
     }
 

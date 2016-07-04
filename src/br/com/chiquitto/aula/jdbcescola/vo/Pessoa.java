@@ -18,6 +18,7 @@ abstract public class Pessoa implements Serializable {
     
     public static final int TIPO_ALUNO = 1;
     public static final int TIPO_PROFESSOR = 2;
+    public static final int TIPO_USUARIO = 3;
 
     public int getIdpessoa() {
         return idpessoa;

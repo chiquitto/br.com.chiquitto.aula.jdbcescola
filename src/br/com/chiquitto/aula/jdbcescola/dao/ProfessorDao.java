@@ -20,22 +20,6 @@ import java.util.List;
  */
 public class ProfessorDao extends PessoaDao {
 
-    public void apagar(Professor professor) {
-        try {
-            Endereco endereco = new Endereco();
-            endereco.setIdpessoa(professor.getIdpessoa());
-            new EnderecoDao().apagar(endereco);
-
-            String sql = "Delete From pessoa Where (idpessoa = ?) And (tipo = 2)";
-            PreparedStatement stmt = Conexao.getConexao().prepareStatement(sql);
-            stmt.setInt(1, professor.getIdpessoa());
-            stmt.executeUpdate();
-            stmt.close();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-    }
-
     public void cadastrar(Professor professor) {
         // TODO: Verificar se email esta repetido
 

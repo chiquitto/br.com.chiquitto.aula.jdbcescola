@@ -18,19 +18,33 @@ CREATE TABLE `pessoa` (
 	`email`	TEXT NOT NULL,
 	`numero`	INTEGER,
 	`salario`	NUMERIC,
-	`nascimento`	TEXT NOT NULL DEFAULT '1900-01-01'
+	`nascimento`	TEXT NOT NULL DEFAULT '1900-01-01',
+	`senha`	TEXT
 );
 
 Insert Into cidade (cidade) Values
 ('Maringa'), ('Cianorte'), ('Umuarama'), ('Paranavai');
 
-Insert Into pessoa (tipo, nome, fone, email, numero, salario, nascimento)
+-- Alunos
+Insert Into pessoa (tipo, nome, fone, email, numero, nascimento)
 Values
-(1, 'Aluno 0001', '9999-1111', 'aluno1@test.com', 1234, null, '1999-05-13'),
-(1, 'Aluno 0002', '9999-2222', 'aluno2@test.com', 2345, null, '1999-03-26'),
-(1, 'Aluno 0003', '9999-3333', 'aluno3@test.com', 3456, null, '1998-04-01'),
-(2, 'Professor 0001', '8888-1111', 'prof1@test.com', null, 1234.56, '1980-09-21'),
-(2, 'Professor 0002', '8888-2222', 'prof2@test.com', null, 2345.67, '1987-11-02')
+(1, 'Aluno 0001', '11912345678', 'aluno1@test.com', 1234, '1999-05-13'),
+(1, 'Aluno 0002', '12912345678', 'aluno2@test.com', 2345, '1999-03-26'),
+(1, 'Aluno 0003', '13912345678', 'aluno3@test.com', 3456, '1998-04-01')
+;
+
+-- Professores
+Insert Into pessoa (tipo, nome, fone, email, salario, nascimento)
+Values
+(2, 'Professor 0001', '21912345678', 'prof1@test.com', 1234.56, '1980-09-21'),
+(2, 'Professor 0002', '22912345678', 'prof2@test.com', 2345.67, '1987-11-02')
+;
+
+-- Usuarios
+Insert Into pessoa (tipo, nome, fone, email, senha, nascimento)
+Values
+(3, 'Usuário 0001', '31912345678', 'user1@test.com', '123456', '1980-09-21'),
+(3, 'Usuário 0002', '32912345678', 'user2@test.com', '123456', '1987-11-02')
 ;
 
 Insert Into endereco (idpessoa, idcidade, logradouro, numero) Values
@@ -38,5 +52,7 @@ Insert Into endereco (idpessoa, idcidade, logradouro, numero) Values
 (2, 2, 'Praca João Penha', '67-B'),
 (3, 3, 'Rua com U no meio', '222 (Fundos)'),
 (4, 2, 'Praça Mascarenhas', 'S/N'),
-(5, 4, 'Avenida Brasilia', '1567')
+(5, 4, 'Avenida Brasilia', '1567'),
+(6, 3, 'Avenida Aracaju', '580'),
+(7, 2, 'Travessa Itororó', '12')
 ;
