@@ -21,8 +21,6 @@ import java.util.List;
 public class AlunoDao extends PessoaDao {
 
     public void cadastrar(Aluno aluno) {
-        // TODO: Verificar se email esta repetido
-
         String sql = "Insert Into pessoa"
                 + " (tipo, nome, fone, email, numero, nascimento)"
                 + " Values"
@@ -52,8 +50,6 @@ public class AlunoDao extends PessoaDao {
     }
 
     public void editar(Aluno aluno) {
-        // TODO: Verificar se email esta repetido
-
         String sql = "Update pessoa"
                 + " Set "
                 + " nome = ?,"
@@ -103,24 +99,6 @@ public class AlunoDao extends PessoaDao {
     }
 
     public Aluno getOne(int idpessoa) throws RowNotFoundException {
-        try {
-            String sql = "Select idpessoa, nome, fone, email, salario, nascimento From pessoa Where (tipo=1) And (idpessoa = ?)";
-
-            PreparedStatement stmt = Conexao.getConexao().prepareStatement(sql);
-            stmt.setInt(1, idpessoa);
-
-            ResultSet rs = stmt.executeQuery();
-
-            if (rs.next()) {
-                Aluno aluno = (Aluno) recordset2Vo(rs, Pessoa.TIPO_ALUNO);
-
-                return aluno;
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        throw new RowNotFoundException();
+        return (Aluno) super.getOne(idpessoa);
     }
 }

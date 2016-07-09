@@ -49,8 +49,6 @@ public class UsuarioDao extends PessoaDao {
     }
 
     public void editar(Usuario usuario) {
-        // TODO: Verificar se email esta repetido
-
         String sql = "Update pessoa"
                 + " Set "
                 + " nome = ?,"
@@ -121,23 +119,6 @@ public class UsuarioDao extends PessoaDao {
     }
 
     public Usuario getOne(int idpessoa) throws RowNotFoundException {
-        try {
-            String sql = "Select idpessoa, nome, fone, email, senha, nascimento From pessoa Where (tipo=3) And (idpessoa = ?)";
-
-            PreparedStatement stmt = Conexao.getConexao().prepareStatement(sql);
-            stmt.setInt(1, idpessoa);
-
-            ResultSet rs = stmt.executeQuery();
-
-            if (rs.next()) {
-                Usuario usuario = (Usuario) recordset2Vo(rs, Pessoa.TIPO_USUARIO);
-                return usuario;
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        throw new RowNotFoundException();
+        return (Usuario) super.getOne(idpessoa);
     }
 }

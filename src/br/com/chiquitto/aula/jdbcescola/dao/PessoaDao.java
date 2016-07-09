@@ -1,6 +1,7 @@
 package br.com.chiquitto.aula.jdbcescola.dao;
 
 import br.com.chiquitto.aula.jdbcescola.Conexao;
+import br.com.chiquitto.aula.jdbcescola.exception.RowNotFoundException;
 import br.com.chiquitto.aula.jdbcescola.vo.Aluno;
 import br.com.chiquitto.aula.jdbcescola.vo.Endereco;
 import br.com.chiquitto.aula.jdbcescola.vo.Pessoa;
@@ -36,6 +37,36 @@ abstract public class PessoaDao extends AbstractDao {
         }
     }
 
+    public Pessoa getOne(int idpessoa) throws RowNotFoundException {
+        int tipo;
+
+        if (this instanceof AlunoDao) {
+            tipo = Pessoa.TIPO_ALUNO;
+        } else if (this instanceof ProfessorDao) {
+            tipo = Pessoa.TIPO_PROFESSOR;
+        } else {
+            tipo = Pessoa.TIPO_USUARIO;
+        }
+
+        try {
+            String sql = "Select idpessoa, nome, fone, email, numero, salario, nascimento, senha From pessoa Where (tipo=?) And (idpessoa = ?)";
+            PreparedStatement stmt = Conexao.getConexao().prepareStatement(sql);
+            stmt.setInt(1, tipo);
+            stmt.setInt(2, idpessoa);
+            
+            ResultSet rs = stmt.executeQuery();
+            
+            if (rs.next()) {
+                Pessoa pessoa = recordset2Vo(rs, tipo);
+                return pessoa;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        throw new RowNotFoundException();
+    }
+
     protected Pessoa recordset2Vo(ResultSet rs, int tipo) throws SQLException {
         Pessoa pessoa;
 
@@ -44,12 +75,12 @@ abstract public class PessoaDao extends AbstractDao {
                 pessoa = new Aluno();
                 ((Aluno) pessoa).setNumero(rs.getInt("numero"));
                 break;
-                
+
             case Pessoa.TIPO_PROFESSOR:
                 pessoa = new Professor();
                 ((Professor) pessoa).setSalario(rs.getBigDecimal("salario"));
                 break;
-                
+
             case Pessoa.TIPO_USUARIO:
                 pessoa = new Usuario();
                 ((Usuario) pessoa).setSenha(rs.getString("senha"));

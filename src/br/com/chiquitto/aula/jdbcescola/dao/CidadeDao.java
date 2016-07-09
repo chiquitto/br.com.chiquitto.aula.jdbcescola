@@ -33,8 +33,6 @@ public class CidadeDao extends AbstractDao {
     }
 
     public void cadastrar(Cidade cidade) {
-        // TODO: Verificar se cidade esta repetido
-
         String sql = "Insert Into cidade"
                 + " (cidade)"
                 + " Values"
@@ -58,8 +56,6 @@ public class CidadeDao extends AbstractDao {
     }
 
     public void editar(Cidade cidade) {
-        // TODO: Verificar se cidade esta repetido
-
         String sql = "Update cidade"
                 + " Set "
                 + " cidade = ?"
