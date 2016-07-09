@@ -3,7 +3,7 @@ package br.com.chiquitto.aula.jdbcescola.dao;
 import br.com.chiquitto.aula.jdbcescola.Conexao;
 import br.com.chiquitto.aula.jdbcescola.exception.RowNotFoundException;
 import br.com.chiquitto.aula.jdbcescola.vo.Aluno;
-import br.com.chiquitto.aula.jdbcescola.vo.Endereco;
+import br.com.chiquitto.aula.jdbcescola.vo.Pessoa;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -90,22 +90,8 @@ public class AlunoDao extends PessoaDao {
             Statement st = Conexao.getConexao().createStatement();
             ResultSet rs = st.executeQuery("Select idpessoa, numero, nome, fone, email, nascimento From pessoa Where tipo=1");
 
-            DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-
             while (rs.next()) {
-                Aluno aluno = new Aluno();
-                aluno.setIdpessoa(rs.getInt("idpessoa"));
-                aluno.setNumero(rs.getInt("numero"));
-                aluno.setNome(rs.getString("nome"));
-                aluno.setFone(rs.getString("fone"));
-                aluno.setEmail(rs.getString("email"));
-
-                try {
-                    aluno.setNascimento(df.parse(rs.getString("nascimento")));
-                } catch (ParseException ex) {
-                    ex.printStackTrace();
-                }
-
+                Aluno aluno = (Aluno) recordset2Vo(rs, Pessoa.TIPO_ALUNO);
                 alunos.add(aluno);
             }
 
@@ -126,19 +112,7 @@ public class AlunoDao extends PessoaDao {
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
-                DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-
-                Aluno aluno = new Aluno();
-                aluno.setIdpessoa(rs.getInt("idpessoa"));
-                aluno.setNome(rs.getString("nome"));
-                aluno.setFone(rs.getString("fone"));
-                aluno.setEmail(rs.getString("email"));
-
-                try {
-                    aluno.setNascimento(df.parse(rs.getString("nascimento")));
-                } catch (ParseException ex) {
-                    ex.printStackTrace();
-                }
+                Aluno aluno = (Aluno) recordset2Vo(rs, Pessoa.TIPO_ALUNO);
 
                 return aluno;
             }

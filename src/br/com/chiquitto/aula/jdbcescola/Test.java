@@ -22,11 +22,11 @@ public class Test {
     public static void main(String[] args) {
         Conexao.setUrl("jdbc:sqlite:/Users/chiquitto/work/aula/br.com.chiquitto.aula.jdbcescola/data/escola.sqlite.db");
 
-        // professor();
+        professor();
         
         usuario();
 
-        // aluno();
+        aluno();
         
         // cidade();
     }
@@ -80,6 +80,7 @@ public class Test {
         professorDao.editar(p);
 
         try {
+            System.out.println("Pegar prof:" + p.getIdpessoa());
             Professor prof = professorDao.getOne(p.getIdpessoa());
             System.out.println("Professor (getOne): " + prof.getIdpessoa());
         } catch (RowNotFoundException ex) {
@@ -137,6 +138,17 @@ public class Test {
 
         a.setNascimento(mesPassado);
         usuarioDao.editar(a);
+        
+        Usuario usuarioByEmailSenha = new Usuario();
+        usuarioByEmailSenha.setEmail("user1@test.com");
+        usuarioByEmailSenha.setSenha("123456");
+        
+        try {
+            usuarioByEmailSenha = usuarioDao.getByEmailSenha(usuarioByEmailSenha);
+            System.out.println(usuarioByEmailSenha.getIdpessoa());
+        } catch (RowNotFoundException ex) {
+            
+        }
 
         List<Usuario> usuarios = usuarioDao.getAll();
         for (Usuario usuario : usuarios) {

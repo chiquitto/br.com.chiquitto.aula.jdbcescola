@@ -2,7 +2,7 @@ package br.com.chiquitto.aula.jdbcescola.dao;
 
 import br.com.chiquitto.aula.jdbcescola.Conexao;
 import br.com.chiquitto.aula.jdbcescola.exception.RowNotFoundException;
-import br.com.chiquitto.aula.jdbcescola.vo.Endereco;
+import br.com.chiquitto.aula.jdbcescola.vo.Pessoa;
 import br.com.chiquitto.aula.jdbcescola.vo.Professor;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -90,22 +90,8 @@ public class ProfessorDao extends PessoaDao {
             Statement st = Conexao.getConexao().createStatement();
             ResultSet rs = st.executeQuery("Select idpessoa, nome, fone, email, salario, nascimento From pessoa Where tipo=2");
 
-            DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-
             while (rs.next()) {
-                Professor professor = new Professor();
-                professor.setIdpessoa(rs.getInt("idpessoa"));
-                professor.setNome(rs.getString("nome"));
-                professor.setFone(rs.getString("fone"));
-                professor.setEmail(rs.getString("email"));
-
-                try {
-                    professor.setNascimento(df.parse(rs.getString("nascimento")));
-                } catch (ParseException ex) {
-                    ex.printStackTrace();
-                }
-
-                professor.setSalario(rs.getBigDecimal("salario"));
+                Professor professor = (Professor) recordset2Vo(rs, Pessoa.TIPO_PROFESSOR);
 
                 professores.add(professor);
             }
@@ -127,21 +113,7 @@ public class ProfessorDao extends PessoaDao {
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
-                DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-                
-                Professor professor = new Professor();
-                professor.setIdpessoa(rs.getInt("idpessoa"));
-                professor.setNome(rs.getString("nome"));
-                professor.setFone(rs.getString("fone"));
-                professor.setEmail(rs.getString("email"));
-
-                try {
-                    professor.setNascimento(df.parse(rs.getString("nascimento")));
-                } catch (ParseException ex) {
-                    ex.printStackTrace();
-                }
-
-                professor.setSalario(rs.getBigDecimal("salario"));
+                Professor professor = (Professor) recordset2Vo(rs, Pessoa.TIPO_PROFESSOR);
 
                 return professor;
             }
