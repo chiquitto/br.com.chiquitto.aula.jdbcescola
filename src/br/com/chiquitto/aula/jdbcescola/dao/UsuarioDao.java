@@ -114,6 +114,41 @@ public class UsuarioDao extends PessoaDao {
         return usuarios;
     }
 
+    public Usuario getByEmailSenha(Usuario usuario) throws RowNotFoundException {
+        try {
+            String sql = "Select idpessoa, nome, fone, email, senha, nascimento From pessoa Where (tipo=3) And (email = ?) And (senha = ?)";
+
+            PreparedStatement stmt = Conexao.getConexao().prepareStatement(sql);
+            stmt.setString(1, usuario.getEmail());
+            stmt.setString(2, usuario.getSenha());
+            
+            ResultSet rs = stmt.executeQuery();
+            
+            if (rs.next()) {
+                DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+
+                Usuario usuario2 = new Usuario();
+                usuario2.setIdpessoa(rs.getInt("idpessoa"));
+                usuario2.setNome(rs.getString("nome"));
+                usuario2.setFone(rs.getString("fone"));
+                usuario2.setEmail(rs.getString("email"));
+                usuario2.setSenha(rs.getString("senha"));
+
+                try {
+                    usuario2.setNascimento(df.parse(rs.getString("nascimento")));
+                } catch (ParseException ex) {
+                    ex.printStackTrace();
+                }
+
+                return usuario2;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        throw new RowNotFoundException();
+    }
+
     public Usuario getOne(int idpessoa) throws RowNotFoundException {
         try {
             String sql = "Select idpessoa, nome, fone, email, senha, nascimento From pessoa Where (tipo=3) And (idpessoa = ?)";
