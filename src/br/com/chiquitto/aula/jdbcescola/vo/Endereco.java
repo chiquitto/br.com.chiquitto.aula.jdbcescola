@@ -8,11 +8,20 @@ import java.io.Serializable;
  */
 public class Endereco implements Serializable {
 
+    private int idendereco;
     private int idcidade;
     private int idpessoa;
     private String logradouro;
     private String numero;
 
+    public int getIdendereco() {
+        return idendereco;
+    }
+    
+    public void setIdendereco(int idendereco) {
+        this.idendereco = idendereco;
+    }
+    
     public int getIdcidade() {
         return idcidade;
     }
@@ -43,6 +52,15 @@ public class Endereco implements Serializable {
 
     public void setNumero(String numero) {
         this.numero = numero;
+    }
+    
+    public String toString() {
+        return String.valueOf(this.getIdendereco())
+                + "|" + String.valueOf(this.getIdcidade())
+                + "|" + String.valueOf(this.getIdpessoa())
+                + "|" + this.getLogradouro()
+                + "|" + this.getNumero()
+                ;
     }
 
 }

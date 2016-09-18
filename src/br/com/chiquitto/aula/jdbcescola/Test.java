@@ -2,16 +2,20 @@ package br.com.chiquitto.aula.jdbcescola;
 
 import br.com.chiquitto.aula.jdbcescola.dao.AlunoDao;
 import br.com.chiquitto.aula.jdbcescola.dao.CidadeDao;
+import br.com.chiquitto.aula.jdbcescola.dao.EnderecoDao;
 import br.com.chiquitto.aula.jdbcescola.dao.ProfessorDao;
 import br.com.chiquitto.aula.jdbcescola.dao.UsuarioDao;
 import br.com.chiquitto.aula.jdbcescola.exception.RowNotFoundException;
 import br.com.chiquitto.aula.jdbcescola.vo.Aluno;
 import br.com.chiquitto.aula.jdbcescola.vo.Cidade;
+import br.com.chiquitto.aula.jdbcescola.vo.Endereco;
 import br.com.chiquitto.aula.jdbcescola.vo.Professor;
 import br.com.chiquitto.aula.jdbcescola.vo.Usuario;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -22,13 +26,11 @@ public class Test {
     public static void main(String[] args) {
         Conexao.setUrl("jdbc:sqlite:/Users/chiquitto/work/aula/br.com.chiquitto.aula.jdbcescola/data/escola.sqlite.db");
 
-        professor();
-        
-        usuario();
-
-        aluno();
-        
-        // cidade();
+        //professor();
+        //usuario();
+        //aluno();
+        //cidade();
+        endereco();
     }
 
     private static void aluno() {
@@ -153,6 +155,81 @@ public class Test {
         List<Usuario> usuarios = usuarioDao.getAll();
         for (Usuario usuario : usuarios) {
             System.out.println(usuario.getIdpessoa() + ":" + usuario.getNome() + ":" + usuario.getNascimento());
+        }
+    }
+    
+    private static void endereco() {
+        Usuario usuario = new Usuario();
+        usuario.setEmail("teste@gmail.com");
+        usuario.setFone("44123456789");
+        usuario.setNascimento(Calendar.getInstance().getTime());
+        usuario.setNome("Usuario Endereco");
+        usuario.setSenha("teste");
+
+        UsuarioDao usuarioDao = new UsuarioDao();
+        usuarioDao.cadastrar(usuario);
+        
+        // Endereco
+        EnderecoDao dao = new EnderecoDao();
+        
+        // Cadastrar endereco
+        Endereco enderecoCad = new Endereco();
+        enderecoCad.setIdpessoa(usuario.getIdpessoa());
+        enderecoCad.setIdcidade(1);
+        enderecoCad.setLogradouro("Rua das casas");
+        enderecoCad.setNumero("S/N");
+        dao.cadastrar(enderecoCad);
+        System.out.println("Endereco cadastrado:" + enderecoCad.getIdendereco());
+        
+        // Pesquisar endereco
+        Endereco enderecoCad2;
+        try {
+            enderecoCad2 = dao.getOne(enderecoCad.getIdendereco());
+            System.out.println(enderecoCad2);
+        } catch (RowNotFoundException ex) {
+            ex.printStackTrace();
+        }
+        
+        // Editar endereco
+        Endereco enderecoUpdate = new Endereco();
+        enderecoUpdate.setIdendereco(enderecoCad.getIdendereco());
+        enderecoUpdate.setIdpessoa(usuario.getIdpessoa());
+        enderecoUpdate.setIdcidade(1);
+        enderecoUpdate.setLogradouro("Rua das fabricas");
+        enderecoUpdate.setNumero("1001");
+        dao.editar(enderecoUpdate);
+        
+        // Pesquisar endereco
+        Endereco enderecoUpdate2;
+        try {
+            enderecoUpdate2 = dao.getOne(enderecoUpdate.getIdendereco());
+            System.out.println(enderecoUpdate2);
+        } catch (RowNotFoundException ex) {
+            System.out.println("Endereco inexistente:" + enderecoUpdate.getIdendereco());
+        }
+        
+        // Testar apagar
+        dao.apagar(enderecoCad);
+        
+        Endereco enderecoApagar;
+        try {
+            enderecoApagar = dao.getOne(enderecoCad.getIdendereco());
+        } catch (RowNotFoundException ex) {
+            System.out.println("Endereco apagado:" + enderecoCad.getIdendereco());
+        }
+        
+        // Testar consulta de enderecos
+        dao.cadastrar(enderecoCad);
+        dao.cadastrar(enderecoCad);
+        
+        List<Endereco> enderecos = dao.getAll();
+        for (Endereco endereco : enderecos) {
+            System.out.println(endereco);
+        }
+        
+        enderecos = dao.getAllByIdpessoa(usuario.getIdpessoa());
+        for (Endereco endereco : enderecos) {
+            System.out.println(endereco);
         }
     }
 
