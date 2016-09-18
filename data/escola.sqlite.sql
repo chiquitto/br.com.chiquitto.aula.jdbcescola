@@ -4,6 +4,7 @@ CREATE TABLE `cidade` (
 );
 
 CREATE TABLE `endereco` (
+	`idendereco`	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
 	`idpessoa`	INTEGER NOT NULL,
 	`idcidade`	INTEGER NOT NULL,
 	`logradouro`	TEXT NOT NULL,
@@ -54,5 +55,6 @@ Insert Into endereco (idpessoa, idcidade, logradouro, numero) Values
 (4, 2, 'Praça Mascarenhas', 'S/N'),
 (5, 4, 'Avenida Brasilia', '1567'),
 (6, 3, 'Avenida Aracaju', '580'),
+(7, 3, 'Rododia 323', 'KM 100'),
 (7, 2, 'Travessa Itororó', '12')
 ;
